@@ -1,0 +1,21 @@
+---
+import BrandMark from './BrandMark.astro';
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname;
+---
+<header class="nav">
+  <nav class="container-wide nav-inner" aria-label="Hauptnavigation">
+    <a class="brand" href="/" aria-label={`${site.name} Startseite`}>
+      <BrandMark class="brand-mark" />
+      {site.name}
+    </a>
+    <ul class="nav-links" id="nav-links">
+      {nav.map((item) => (
+        <li><a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a></li>
+      ))}
+    </ul>
+    <a class="btn btn-primary btn-sm" href="/newsletter/">Klartext abonnieren</a>
+    <button class="nav-toggle" aria-label="Menü" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+  </nav>
+</header>

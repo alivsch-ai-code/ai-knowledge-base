@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { slugify } from '../data/site';
+
+interface Props { guide: CollectionEntry<'guides'> }
+const { guide } = Astro.props;
+const { title, description, category, level, duration, pro } = guide.data;
+
+const catColor: Record<string, string> = {
+  'Grundlagen & Einrichtung': 'c-blue',
+  'Produktivität & Büro': 'c-green',
+  'Marketing & Vertrieb': 'c-orange',
+  'Design & Multimedia': 'c-pink',
+};
+---
+<a class="card" href={`/guides/${guide.id}/`} data-category={slugify(category)}>
+  <span class:list={['card-cat', catColor[category]]}>{category}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <div class="card-meta">
+    <span class="badge">{level}</span>
+    <span class="badge">{duration} Min.</span>
+    {pro && <span class="badge badge-pro">Pro</span>}
+  </div>
+</a>

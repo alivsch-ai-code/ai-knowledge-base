@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { paths } from '../data/learning';
+
+// Kostenlos ist nur, was als Guide existiert und nicht als Pro markiert ist
+const freeGuides = new Set(
+  (await getCollection('guides', ({ data }) => !data.draft && !data.pro)).map((g) => g.id)
+);
+
+const modules = paths.flatMap((p) => p.modules);
+const total = modules.reduce((sum, m) => sum + m.minutes, 0);
+---
+<Base title="Lernpfade" description="Vier Stufen vom ersten Prompt zum eigenen KI-Agenten. Jede Stufe endet mit etwas, das du sofort nutzt.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Lernpfade</p>
+      <h1 class="headline reveal">Dein Weg. Vorgezeichnet.</h1>
+      <p class="lead reveal">Vier Stufen, {modules.length} Module, rund {Math.round(total / 60)} Stunden. Jede Stufe endet mit etwas, das du sofort nutzt.</p>
+      <p class="legend reveal"><span><span class="badge">Guide</span> kostenlos</span><span><span class="badge badge-pro">Pro</span> Teil von Pro</span></p>
+    </div>
+  </section>
+
+  <section class="section section-surface" style="padding-top: 56px">
+    <div class="container-wide levels">
+      {paths.map((p, i) => (
+        <article class="level reveal">
+          <div>
+            <span class="level-num">Stufe {i + 1}</span>
+            <h2>{p.level}</h2>
+            <p class="level-goal">{p.goal}</p>
+            <p class="level-result"><b>Am Ende hast du</b>{p.result}</p>
+          </div>
+          <ol class="modules">
+            {p.modules.map((m) => (
+              <li>
+                {m.guide ? <a href={`/guides/${m.guide}/`}>{m.title}</a> : <span>{m.title}</span>}
+                <span class="mod-time">{m.minutes} Min.</span>
+                {m.guide && freeGuides.has(m.guide) ? <span class="badge">Guide</span> : <span class="badge badge-pro">Pro</span>}
+              </li>
+            ))}
+          </ol>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <Newsletter surface={false} />
+</Base>

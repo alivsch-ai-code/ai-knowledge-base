@@ -1,0 +1,18 @@
+---
+import { site } from '../data/site';
+
+interface Props { surface?: boolean }
+const { surface = true } = Astro.props;
+---
+<section class:list={['section', 'newsletter', { 'section-surface': surface }]} id="newsletter">
+  <div class="container reveal">
+    <h2 class="headline-md"><span class="aurora-text">Klartext.</span></h2>
+    <p class="lead">Eine Automation pro Woche. Jeden Sonntag. Kostenlos.</p>
+    <form data-newsletter method="post" action={site.newsletterAction || undefined}>
+      <label for="nl-email" class="visually-hidden">E‑Mail‑Adresse</label>
+      <input id="nl-email" type="email" name="EMAIL" placeholder="E‑Mail‑Adresse" autocomplete="email" required>
+      <button class="btn btn-primary" type="submit">Abonnieren</button>
+    </form>
+    <p class="form-note">Kein Spam. Abmeldung mit einem Klick. Mehr in der <a href="/datenschutz/">Datenschutzerklärung</a>.</p>
+  </div>
+</section>

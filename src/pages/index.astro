@@ -1,0 +1,435 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import GuideCard from '../components/GuideCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { site } from '../data/site';
+
+const latest = (await getCollection('guides', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  .slice(0, 3);
+
+const audiences = [
+  {
+    tab: 'Unternehmer',
+    title: 'Führe dein Unternehmen. Nicht deinen Posteingang.',
+    text: 'Buchhaltung, Kundenanfragen und Reporting laufen automatisch. Du gewinnst Zeit für Strategie, Team und Wachstum.',
+    workflows: [
+      { label: 'Rechnungen automatisch erfassen', guide: 'rechnungen-pdf-excel' },
+      { label: 'Angebote in Minuten', guide: 'angebote-in-minuten' },
+      { label: 'Wöchentliches Kennzahlen‑Briefing' },
+    ],
+  },
+  {
+    tab: 'Selbstständige',
+    title: 'Allein selbstständig. Nie mehr ohne Team.',
+    text: 'KI übernimmt Recherche, Entwürfe und Terminabstimmung. Du konzentrierst dich auf deine Kunden.',
+    workflows: [
+      { label: 'Neukunden recherchieren' },
+      { label: 'Content für eine Woche in einer Stunde' },
+      { label: 'Termine ohne Hin und Her' },
+    ],
+  },
+  {
+    tab: 'Angestellte',
+    title: 'Werde die Person, die weiß, wie es geht.',
+    text: 'Protokolle, Recherchen und Präsentationen in einem Bruchteil der Zeit. KI‑Kompetenz bringt jede Karriere voran.',
+    workflows: [
+      { label: 'Meeting‑Protokolle in zwei Minuten', guide: 'meeting-protokolle' },
+      { label: 'Recherchen zusammenfassen' },
+      { label: 'Präsentationen aus Stichpunkten' },
+    ],
+  },
+  {
+    tab: 'Tech‑Interessierte',
+    title: 'Nicht nur nutzen. Verstehen.',
+    text: 'Lokale Modelle, eigene Agenten, APIs und MCP‑Server. Für alle, die wissen wollen, wie es funktioniert.',
+    workflows: [
+      { label: 'Lokale KI mit Ollama', guide: 'ollama-lokal-installieren' },
+      { label: 'Eigene Agenten bauen' },
+      { label: 'n8n selbst hosten' },
+    ],
+  },
+];
+
+const check = '<svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="m2.5 6.2 2.3 2.3 4.7-5"/></svg>';
+---
+<Base>
+  <!-- ============ 1 · Hero ============ -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Klarwerk Akademie</p>
+      <h1 class="headline reveal">Arbeit, die sich selbst erledigt.</h1>
+      <p class="lead reveal">Lerne, KI‑Automationen einzurichten, die für dich lesen, schreiben und sortieren. Ohne eine Zeile Code.</p>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary" href="/guides/prompt-grundlagen/">Ersten Guide starten</a>
+        <a class="link-more" href="/guides/">Alle Guides ansehen</a>
+      </div>
+      <ul class="pillars reveal">
+        <li>Jeder Guide getestet</li>
+        <li>Kein Code nötig</li>
+        <li>Datenschutz mitgedacht</li>
+      </ul>
+
+      <div class="flow-card reveal" aria-label="Beispiel-Workflow: E-Mail wird von KI sortiert und als Aufgabe angelegt">
+        <div class="flow-head">
+          <span class="flow-title">Posteingang → Aufgaben</span>
+          <span class="status">Aktiv · heute 38‑mal ausgeführt</span>
+        </div>
+        <div class="flow">
+          <div class="node">
+            <div class="node-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></div>
+            <div class="node-label">Neue E‑Mail</div>
+            <div class="node-sub">Gmail · Outlook</div>
+          </div>
+          <div class="wire"></div>
+          <div class="node node-ai">
+            <div class="node-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.7 4.2 3.8 7.3 8 8-4.2.7-7.3 3.8-8 8-.7-4.2-3.8-7.3-8-8 4.2-.7 7.3-3.8 8-8z"/></svg></div>
+            <div class="node-label">KI versteht</div>
+            <div class="node-sub">sortiert &amp; fasst zusammen</div>
+          </div>
+          <div class="wire"></div>
+          <div class="node">
+            <div class="node-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
+            <div class="node-label">Aufgabe angelegt</div>
+            <div class="node-sub">Notion · Todoist</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tools reveal">
+        Guides für
+        <ul>
+          <li>ChatGPT</li><li>Claude</li><li>Gemini</li><li>Ollama</li><li>n8n</li><li>Notion</li><li>Gmail</li><li>Outlook</li><li>Google Kalender</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · Was du lernst ============ -->
+  <section class="section section-surface" id="lernen">
+    <div class="container-wide">
+      <div class="center">
+        <h2 class="headline reveal">Was du lernst.<br><span class="muted">Und was es dir bringt.</span></h2>
+      </div>
+
+      <div class="bento">
+        <article class="tile tile-lg reveal">
+          <p class="tile-label c-blue">Automationen</p>
+          <h3>Einmal einrichten.<br>Für immer entlastet.</h3>
+          <p>Erkenne, welche Aufgaben sich wiederholen, und übergib sie an die KI. Schritt für Schritt, mit Ergebnissen ab dem ersten Tag.</p>
+          <div class="tile-visual">
+            <div class="week" aria-hidden="true">
+              <div class="day">Mo<div class="bar" data-auto="1"></div><div class="bar"></div><div class="bar" data-auto="1"></div></div>
+              <div class="day">Di<div class="bar"></div><div class="bar" data-auto="1"></div><div class="bar" data-auto="1"></div></div>
+              <div class="day">Mi<div class="bar" data-auto="1"></div><div class="bar" data-auto="1"></div><div class="bar"></div></div>
+              <div class="day">Do<div class="bar" data-auto="1"></div><div class="bar"></div><div class="bar" data-auto="1"></div></div>
+              <div class="day">Fr<div class="bar" data-auto="1"></div><div class="bar" data-auto="1"></div><div class="bar" data-auto="1"></div></div>
+            </div>
+            <div class="week-legend" aria-hidden="true"><span><i></i>Von dir erledigt</span><span><i class="auto"></i>Von KI erledigt</span></div>
+          </div>
+        </article>
+
+        <article class="tile reveal">
+          <p class="tile-label c-violet">KI‑Tools</p>
+          <h3>Jedes Tool.<br>Auf den Punkt.</h3>
+          <p>Was ChatGPT, Claude, n8n und Co. können, wo ihre Grenzen liegen und welches du wann brauchst.</p>
+          <div class="tile-visual chips" aria-hidden="true">
+            <span class="chip">ChatGPT</span><span class="chip">Claude</span><span class="chip">Gemini</span><span class="chip">Ollama</span><span class="chip">n8n</span><span class="chip">Notion</span>
+          </div>
+        </article>
+
+        <article class="tile reveal">
+          <p class="tile-label c-orange">Für Unternehmen</p>
+          <h3>Dein Team.<br>Nur schneller.</h3>
+          <p>Rechnungen, Angebote, Reporting: bewährte Abläufe, angepasst an eure Prozesse.</p>
+          <div class="tile-visual mini-flow" aria-hidden="true">
+            <span>PDF‑Rechnung</span><span class="mini-wire"></span><span>✦ KI</span><span class="mini-wire"></span><span>Excel</span>
+          </div>
+        </article>
+
+        <article class="tile reveal">
+          <p class="tile-label c-teal">Lokale KI</p>
+          <h3>Privat.<br>Per Design.</h3>
+          <p>Sprachmodelle auf deinem eigenen Rechner. Deine Daten bleiben, wo sie hingehören.</p>
+          <div class="tile-visual">
+            <svg class="lock" viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="20" y="8" width="100" height="66" rx="8"/>
+              <path d="M6 86h128l-8 6H14z"/>
+              <rect x="56" y="38" width="28" height="22" rx="5" stroke="url(#auroraGrad)"/>
+              <path d="M62 38v-6a8 8 0 0 1 16 0v6" stroke="url(#auroraGrad)"/>
+            </svg>
+          </div>
+        </article>
+
+        <article class="tile reveal">
+          <p class="tile-label aurora-text">KI‑Agenten</p>
+          <h3>Assistenten, die handeln.</h3>
+          <p>Agenten recherchieren, sortieren und erledigen Aufgaben selbstständig. Die Entscheidung bleibt bei dir.</p>
+          <div class="tile-visual"><div class="orb" aria-hidden="true"></div></div>
+        </article>
+
+        <article class="tile tile-full reveal">
+          <div>
+            <p class="tile-label c-pink">Prompting</p>
+            <h3>Die richtigen Worte.<br>Sofort.</h3>
+            <p>Lerne die fünf Bausteine guter Prompts. Und nutze geprüfte Vorlagen aus der Bibliothek.</p>
+            <p><a class="link-more" href="/prompts/" style="font-size:17px">Zur Prompt‑Bibliothek</a></p>
+          </div>
+          <div class="tile-visual">
+            <div class="prompt"><code>Fasse diese E‑Mail in drei Stichpunkten zusammen und schlage eine höfliche Antwort vor.</code><button type="button">Kopieren</button></div>
+            <div class="prompt"><code>Erstelle aus diesen Notizen ein Angebot mit Leistungen, Zeitplan und Preis.</code><button type="button">Kopieren</button></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · Ein Beispiel ============ -->
+  <section class="section" id="beispiel">
+    <div class="container-wide showcase">
+      <div class="reveal">
+        <p class="eyebrow c-blue">Ein Beispiel</p>
+        <h2 class="headline-md">Dein Morgen.<br>In 30 Sekunden erfasst.</h2>
+        <p class="lead">Jeden Morgen um 7:30 liest ein Workflow deinen Kalender und Posteingang. Dann schickt er dir, was heute zählt. Einrichtung: 15 Minuten. Ersparnis: jeden Tag.</p>
+        <div class="cta-row">
+          <a class="link-more" href="/guides/morgen-briefing-agent/">Zum Guide</a>
+        </div>
+      </div>
+      <div class="briefing reveal" aria-label="Beispiel eines Morgen-Briefings">
+        <div class="briefing-date">Dienstag, 7:30</div>
+        <h3>Guten Morgen, Lena.</h3>
+        <div class="briefing-group">
+          <h4>Termine</h4>
+          <div class="briefing-row"><time>09:30</time><span class="dot" style="background:#0071e3"></span>Kundencall Müller GmbH</div>
+          <div class="briefing-row"><time>14:00</time><span class="dot" style="background:#7a5cff"></span>Team‑Review Q4‑Kampagne</div>
+        </div>
+        <div class="briefing-group">
+          <h4>Wichtig im Posteingang</h4>
+          <div class="briefing-row"><span class="dot" style="background:#ff9f0a"></span>Angebotsanfrage: Antwort bis 12 Uhr</div>
+          <div class="briefing-row"><span class="dot" style="background:#30d158"></span>Rechnung #1042 wurde bezahlt</div>
+        </div>
+        <div class="briefing-ai">
+          <strong class="aurora-text">✦ Empfehlung</strong>
+          Beantworte zuerst die Angebotsanfrage. Ein Entwurf liegt bereits in deinen Entwürfen.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · Warum automatisieren ============ -->
+  <section class="section night" id="warum">
+    <div class="container-wide">
+      <div class="center">
+        <h2 class="headline reveal">Warum automatisieren?</h2>
+        <p class="lead reveal">Weil deine Zeit für Besseres gemacht ist.</p>
+      </div>
+
+      <div class="why-grid">
+        <article class="why reveal">
+          <h3>Zeit.<br>Zurückgewonnen.</h3>
+          <p>Routine kostet dich jede Woche Stunden. Eine Automation gibt sie dir zurück. Jede Woche aufs Neue.</p>
+          <div class="why-visual">
+            <svg class="ring" width="170" height="170" viewBox="0 0 170 170" aria-hidden="true">
+              <circle class="track" cx="85" cy="85" r="70"/>
+              <circle class="fill" cx="85" cy="85" r="70" transform="rotate(-90 85 85)"/>
+              <text x="85" y="88" text-anchor="middle">Mehr Zeit</text>
+              <text class="ring-sub" x="85" y="108" text-anchor="middle">jede Woche</text>
+            </svg>
+          </div>
+        </article>
+
+        <article class="why reveal">
+          <h3>Kopf frei.<br>Für das Wesentliche.</h3>
+          <p>Sortieren, abtippen, nachfassen: Das läuft von allein. Du konzentrierst dich auf das, was nur du kannst.</p>
+          <div class="why-visual">
+            <div class="stack" aria-hidden="true"><div></div><div></div><div></div><div></div><div class="focus">Deine wichtigste Aufgabe</div></div>
+          </div>
+        </article>
+
+        <article class="why reveal">
+          <h3>Mehr Anfragen.<br>Gleicher Aufwand.</h3>
+          <p>Doppelt so viele Anfragen? Deine Workflows schaffen das. Dein Kalender bleibt, wie er ist.</p>
+          <div class="why-visual">
+            <svg width="300" height="160" viewBox="0 0 300 160" fill="none" aria-hidden="true">
+              <g stroke="url(#auroraLine)" stroke-width="2" stroke-linecap="round">
+                <path class="draw" d="M30 80 C 110 80, 130 20, 260 20"/>
+                <path class="draw" d="M30 80 C 110 80, 130 50, 260 50"/>
+                <path class="draw" d="M30 80 H 260"/>
+                <path class="draw" d="M30 80 C 110 80, 130 110, 260 110"/>
+                <path class="draw" d="M30 80 C 110 80, 130 140, 260 140"/>
+              </g>
+              <circle cx="30" cy="80" r="9" fill="#f5f5f7"/>
+              <g fill="#3fb6ff"><circle cx="260" cy="20" r="6"/><circle cx="260" cy="50" r="6"/><circle cx="260" cy="80" r="6"/><circle cx="260" cy="110" r="6"/><circle cx="260" cy="140" r="6"/></g>
+            </svg>
+          </div>
+        </article>
+
+        <article class="why reveal">
+          <h3>Ein Vorsprung,<br>der wächst.</h3>
+          <p>Jede Automation macht die nächste leichter. Wer heute anfängt, arbeitet morgen anders.</p>
+          <div class="why-visual">
+            <svg width="300" height="160" viewBox="0 0 300 160" fill="none" aria-hidden="true">
+              <path d="M20 140 H 280" stroke="#2c2c2e" stroke-width="2"/>
+              <path class="draw" d="M20 138 C 120 136, 190 120, 280 20" stroke="url(#auroraLine)" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · So lernst du ============ -->
+  <section class="section section-surface" id="so-lernst-du">
+    <div class="container-wide">
+      <div class="center">
+        <h2 class="headline reveal">Vom ersten Prompt<br>zum eigenen Agenten.</h2>
+        <p class="lead reveal">Ein klarer Weg. In deinem Tempo.</p>
+      </div>
+
+      <div class="bento">
+        <article class="tile tile-full reveal">
+          <div>
+            <p class="tile-label c-blue">Lernpfade</p>
+            <h3>Dein Weg.<br>Vorgezeichnet.</h3>
+            <p>Vier Stufen vom Einsteiger zum Architekten. Du weißt immer, wo du stehst und was als Nächstes kommt.</p>
+            <p><a class="link-more" href="/lernpfade/" style="font-size:17px">Lernpfade ansehen</a></p>
+          </div>
+          <div class="tile-visual">
+            <div class="path-track" aria-hidden="true">
+              <div class="station done"><i></i><b>Einsteiger</b><span>Prompts &amp; Tools</span></div>
+              <div class="station current"><i></i><b>Anwender</b><span>Erste Automationen</span></div>
+              <div class="station"><i></i><b>Automatisierer</b><span>Workflows &amp; APIs</span></div>
+              <div class="station"><i></i><b>Architekt</b><span>Eigene Agenten</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile tile-md reveal">
+          <p class="tile-label c-green">Guides</p>
+          <h3>Klick für Klick.<br>Zum Ergebnis.</h3>
+          <p>Jeder Guide ist getestet und endet mit einer Automation, die läuft.</p>
+          <div class="tile-visual">
+            <ul class="checklist" aria-hidden="true">
+              <li><span class="check" set:html={check} />Konto verbinden<span class="meta">2 Min.</span></li>
+              <li><span class="check" set:html={check} />Regel festlegen<span class="meta">5 Min.</span></li>
+              <li><span class="check" set:html={check} />Testlauf starten<span class="meta">3 Min.</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tile tile-md tile-dark reveal">
+          <p class="tile-label c-sky">Video‑Kurse</p>
+          <h3>Zusehen. Nachmachen. Können.</h3>
+          <p>Kompakte Lektionen mit Projektdateien. Pausieren, nachbauen, weiter.</p>
+          <div class="tile-visual">
+            <div class="player" aria-hidden="true">
+              <div class="play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l11-6.5z"/></svg></div>
+              <div class="progress"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile tile-md reveal">
+          <p class="tile-label c-orange">Vorlagen</p>
+          <h3>Importieren statt nachbauen.</h3>
+          <p>Fertige Workflows für n8n. Anpassen, aktivieren, fertig.</p>
+          <div class="tile-visual mini-flow" aria-hidden="true">
+            <span>vorlage.json</span><span class="mini-wire"></span><span>Importieren</span><span class="mini-wire"></span><span class="ok">✓ Aktiv</span>
+          </div>
+        </article>
+
+        <article class="tile tile-md reveal">
+          <p class="tile-label c-pink">Community</p>
+          <h3>Niemand automatisiert allein.</h3>
+          <p>Fragen stellen, Workflows teilen und einmal im Monat live voneinander lernen.</p>
+          <div class="tile-visual">
+            <div class="avatars" aria-hidden="true"><span>LM</span><span>JK</span><span>SR</span><span>AT</span><span>+</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · Frisch getestet ============ -->
+  <section class="section">
+    <div class="container-wide">
+      <div class="center">
+        <h2 class="headline-md reveal">Frisch getestet.</h2>
+        <p class="lead reveal">Die neuesten Guides aus der Werkstatt.</p>
+      </div>
+      <div class="card-grid" style="margin-top:56px">
+        {latest.map((guide) => <GuideCard guide={guide} />)}
+      </div>
+      <div class="cta-row"><a class="link-more" href="/guides/">Alle Guides ansehen</a></div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · Für wen ============ -->
+  <section class="section" id="fuer-wen" style="padding-top:0">
+    <div class="container-wide center">
+      <h2 class="headline reveal">Gemacht für alle,<br>die mehr bewegen wollen.</h2>
+
+      <div class="segmented reveal" role="tablist" aria-label="Zielgruppen">
+        {audiences.map((a, i) => (
+          <button role="tab" id={`tab-${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`panel-${i + 1}`} tabindex={i === 0 ? 0 : -1}>{a.tab}</button>
+        ))}
+      </div>
+
+      {audiences.map((a, i) => (
+        <div class="persona" role="tabpanel" id={`panel-${i + 1}`} aria-labelledby={`tab-${i + 1}`} hidden={i !== 0}>
+          <div>
+            <h3>{a.title}</h3>
+            <p>{a.text}</p>
+          </div>
+          <div>
+            <h4>Typische Workflows</h4>
+            <ul>
+              {a.workflows.map((w) => (
+                <li>{w.guide ? <a href={`/guides/${w.guide}/`}>{w.label}</a> : w.label}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ 8 · Tarife ============ -->
+  <section class="section" id="tarife" style="padding-top:0">
+    <div class="container-wide center">
+      <h2 class="headline reveal">Starte kostenlos.<br><span class="muted">Wachse mit Pro.</span></h2>
+
+      <div class="plans">
+        <article class="plan reveal" style="text-align:left">
+          <h3>Kostenlos</h3>
+          <div class="price">0 €</div>
+          <span class="muted">Für immer.</span>
+          <ul>
+            <li>Alle frei verfügbaren Guides</li>
+            <li>Newsletter „Klartext“, jeden Sonntag</li>
+            <li>Ausgewählte Prompts</li>
+          </ul>
+          <a class="btn btn-dark" href="/guides/prompt-grundlagen/">Ersten Guide starten</a>
+        </article>
+        <article class="plan plan-pro reveal" style="text-align:left">
+          <h3>Pro</h3>
+          <div class="price">{site.proPrice} <small>/ Monat</small></div>
+          <span style="color:#a1a1a6">Monatlich kündbar.</span>
+          <ul>
+            <li>Alles aus Kostenlos</li>
+            <li>Alle Video‑Kurse</li>
+            <li>Profi‑Guides in voller Länge</li>
+            <li>Vorlagen zum Importieren</li>
+            <li>Komplette Prompt‑Bibliothek</li>
+            <li>Community und monatliche Live‑Sessions</li>
+          </ul>
+          <a class="btn btn-primary" href="/pro/">Pro entdecken</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9 · Klartext ============ -->
+  <Newsletter />
+</Base>

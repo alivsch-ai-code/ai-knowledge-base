@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+---
+<Base title="Newsletter „Klartext“" description="Eine Automation pro Woche. Jeden Sonntag. Kostenlos.">
+  <Newsletter surface={false} />
+
+  <section class="section section-surface">
+    <div class="container-wide center">
+      <h2 class="headline-md reveal">Was dich erwartet.</h2>
+      <div class="values">
+        <article class="value reveal">
+          <h3>Eine Automation.</h3>
+          <p>Jede Woche ein fertiger Workflow oder Prompt, den du in unter 30 Minuten einrichtest.</p>
+        </article>
+        <article class="value reveal">
+          <h3>Das Wichtigste der Woche.</h3>
+          <p>Neue KI‑Tools und Updates, eingeordnet in drei Sätzen: Was ist neu, und betrifft es dich?</p>
+        </article>
+        <article class="value reveal">
+          <h3>Neue Guides zuerst.</h3>
+          <p>Abonnenten erfahren als Erste von neuen Anleitungen, Kursen und Live‑Sessions.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>

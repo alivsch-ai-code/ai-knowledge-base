@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { courses } from '../data/learning';
+---
+<Base title="Video-Kurse" description="Kompakte Video-Kurse zu n8n, Claude und lokaler KI. Zusehen. Nachmachen. Können.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Video‑Kurse</p>
+      <h1 class="headline reveal">Zusehen. Nachmachen. Können.</h1>
+      <p class="lead reveal">Kompakte Lektionen, echte Projekte, Dateien zum Mitmachen. Alle Kurse sind Teil von Pro.</p>
+    </div>
+  </section>
+
+  <section class="section section-surface" style="padding-top: 56px">
+    <div class="container-wide">
+      {courses.map((c) => {
+        const minutes = c.lessons.reduce((s, l) => s + l.minutes, 0);
+        return (
+          <article class="course reveal">
+            <div>
+              <span class="badge">{c.label}</span>
+              <h2>{c.title}</h2>
+              <p>{c.description}</p>
+              <ul class="lessons">
+                {c.lessons.map((l) => <li>{l.title}<span>{l.minutes} Min.</span></li>)}
+              </ul>
+              <div class="cta-row">
+                {c.status === 'Verfügbar'
+                  ? <a class="btn btn-primary" href="/pro/">Mit Pro ansehen</a>
+                  : <a class="link-more" href="/newsletter/">Benachrichtigen lassen</a>}
+                <span class="muted" style="font-size:14px">{c.lessons.length} Lektionen · {minutes} Min. · {c.status}</span>
+              </div>
+            </div>
+            <div class="player" aria-hidden="true">
+              <div class="play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l11-6.5z" /></svg></div>
+              <div class="progress"></div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Base>

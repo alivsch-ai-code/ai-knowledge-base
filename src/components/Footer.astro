@@ -1,0 +1,35 @@
+---
+import { footer, legalLinks, site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container-wide">
+    <p class="footer-note">Alle Anleitungen werden vor der Veröffentlichung getestet. Genannte Produktnamen sind Marken ihrer jeweiligen Inhaber.</p>
+    <div class="footer-cols">
+      {footer.map((col) => (
+        <div>
+          <h4>{col.title}</h4>
+          <ul>{col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </div>
+      ))}
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href="/kontakt/">Kontaktformular</a></li>
+          <li><a href="/pro/#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Folgen</h4>
+        <ul>{site.social.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © {year} {site.name}. Alle Rechte vorbehalten.</span>
+      <nav class="footer-legal" aria-label="Rechtliches">
+        {legalLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </div>
+  </div>
+</footer>

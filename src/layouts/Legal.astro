@@ -1,0 +1,19 @@
+---
+import Base from './Base.astro';
+
+interface Props { title: string; updated: string }
+const { title, updated } = Astro.props;
+---
+<Base title={title} description={`${title} von Klarwerk`}>
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="headline-md">{title}</h1>
+      <p class="lead">Stand: {updated}</p>
+    </div>
+  </section>
+  <section class="container" style="padding-bottom: clamp(80px, 10vw, 128px)">
+    <div class="prose prose-narrow legal">
+      <slot />
+    </div>
+  </section>
+</Base>

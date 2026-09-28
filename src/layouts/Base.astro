@@ -1,0 +1,62 @@
+---
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '../styles/global.css';
+import '../styles/pages.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const { title, description = site.description, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} – ${site.name}` : `${site.name} – KI-Automatisierung lernen`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  {noindex && <meta name="robots" content="noindex">}
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content={site.name}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:locale" content="de_DE">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="sitemap" href="/sitemap-index.xml">
+  <script is:inline>document.documentElement.classList.remove('no-js')</script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="auroraGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7a5cff" />
+        <stop offset=".55" stop-color="#3fb6ff" />
+        <stop offset="1" stop-color="#5cf2d0" />
+      </linearGradient>
+      <linearGradient id="auroraLine" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="280" y2="0">
+        <stop offset="0" stop-color="#7a5cff" />
+        <stop offset=".55" stop-color="#3fb6ff" />
+        <stop offset="1" stop-color="#5cf2d0" />
+      </linearGradient>
+    </defs>
+  </svg>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+  <script src="../scripts/main.js"></script>
+</body>
+</html>

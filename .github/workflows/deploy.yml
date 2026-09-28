@@ -1,0 +1,51 @@
+# Baut die Website bei jedem Push auf "main" und lädt sie per SFTP auf den IONOS-Webspace.
+# Benötigte Secrets (GitHub → Settings → Secrets and variables → Actions):
+#   IONOS_SFTP_HOST      z. B. access-XXXXXXXXXX.webspace-host.com (IONOS → Hosting → SFTP & SSH)
+#   IONOS_SFTP_USER      SFTP-Benutzername
+#   IONOS_SFTP_PASSWORD  SFTP-Passwort
+#   IONOS_TARGET_DIR     Zielordner auf dem Webspace, z. B. /klarwerk
+
+name: Deploy to IONOS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Upload via SFTP
+        env:
+          LFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+          HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          USER: ${{ secrets.IONOS_SFTP_USER }}
+          TARGET: ${{ secrets.IONOS_TARGET_DIR }}
+        run: |
+          lftp -u "$USER" --env-password "sftp://$HOST" -e "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            mirror --reverse --delete --parallel=4 --verbose dist/ $TARGET/;
+            quit
+          "

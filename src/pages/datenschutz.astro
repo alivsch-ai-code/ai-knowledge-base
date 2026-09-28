@@ -1,0 +1,45 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+const l = site.legal;
+---
+<Legal title="Datenschutzerklärung" updated="September 2026">
+  <p class="notice"><strong>Vorlage:</strong> Diese Struktur passt zum aktuellen technischen Aufbau (IONOS‑Hosting, keine Cookies, keine Tracking‑Tools, selbst gehostete Schriften). Sie ersetzt keine Rechtsberatung. Vor Veröffentlichung prüfen lassen oder mit einem Generator (z. B. eRecht24, IT‑Recht Kanzlei) abgleichen. Bei jedem neuen Dienst (Analyse, Video‑Einbettung, Zahlungsanbieter) muss diese Seite ergänzt werden.</p>
+
+  <h2>1. Verantwortlicher</h2>
+  <p>
+    {l.company}, {l.owner}<br>
+    {l.street}, {l.city}<br>
+    E‑Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+  </p>
+
+  <h2>2. Überblick</h2>
+  <p>Wir verarbeiten personenbezogene Daten nur, soweit dies für den Betrieb dieser Website, die Beantwortung von Anfragen und den Versand unseres Newsletters erforderlich ist. Diese Website setzt <strong>keine Cookies</strong> und verwendet <strong>keine Analyse‑ oder Tracking‑Dienste</strong>. Schriftarten werden von unserem eigenen Server geladen; es findet keine Verbindung zu Google Fonts statt.</p>
+
+  <h2>3. Hosting</h2>
+  <p>Diese Website wird bei der IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, gehostet. Beim Aufruf der Website verarbeitet IONOS in unserem Auftrag technisch notwendige Daten (Server‑Logfiles, siehe Abschnitt 4). Mit IONOS besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Die Server stehen in Deutschland bzw. der EU.</p>
+  <p>Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO).</p>
+
+  <h2>4. Server‑Logfiles</h2>
+  <p>Bei jedem Aufruf werden automatisch erfasst: IP‑Adresse (gekürzt bzw. anonymisiert, soweit vom Hoster unterstützt), Datum und Uhrzeit, aufgerufene Seite, übertragene Datenmenge, Referrer‑URL, Browser und Betriebssystem. Diese Daten dienen der Sicherheit und Fehleranalyse und werden nach <span>[Speicherdauer laut IONOS, z. B. 7 Tage]</span> gelöscht.</p>
+
+  <h2>5. Kontaktformular und E‑Mail</h2>
+  <p>Wenn du uns über das Kontaktformular oder per E‑Mail schreibst, verarbeiten wir Name, E‑Mail‑Adresse, Thema und Nachricht, um deine Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. lit. f (allgemeine Anfragen). Die Daten werden gelöscht, sobald die Anfrage abschließend bearbeitet ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+  <h2>6. Newsletter „Klartext“</h2>
+  <p>Für den Newsletter benötigen wir deine E‑Mail‑Adresse. Die Anmeldung erfolgt im Double‑Opt‑in‑Verfahren: Du erhältst eine E‑Mail mit einem Bestätigungslink. Wir protokollieren Anmeldung und Bestätigung (Zeitpunkt, IP‑Adresse), um die Einwilligung nachweisen zu können.</p>
+  <p>Versanddienstleister ist <span>[Anbieter, Anschrift]</span>. Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit über den Abmeldelink in jeder Ausgabe widerrufen kannst.</p>
+
+  <h2>7. Pro‑Mitgliedschaft und Zahlungen</h2>
+  <p>Kauf und Verwaltung der Pro‑Mitgliedschaft erfolgen über <span>[Plattform/Zahlungsanbieter, Anschrift]</span>. Dabei werden die für Vertragsabwicklung und Zahlung erforderlichen Daten verarbeitet (Art. 6 Abs. 1 lit. b und c DSGVO). Es gelten ergänzend die Datenschutzhinweise des jeweiligen Anbieters.</p>
+
+  <h2>8. Externe Links</h2>
+  <p>Links zu anderen Websites (z. B. YouTube, LinkedIn, Tool‑Anbieter) sind einfache Verweise. Erst wenn du einen Link anklickst, werden Daten an den jeweiligen Anbieter übertragen.</p>
+
+  <h2>9. Deine Rechte</h2>
+  <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (Art. 21). Erteilte Einwilligungen kannst du jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+  <p>Du hast außerdem das Recht, dich bei einer Datenschutz‑Aufsichtsbehörde zu beschweren, insbesondere in dem Bundesland deines Wohnsitzes oder unseres Sitzes.</p>
+
+  <h2>10. Änderungen</h2>
+  <p>Wir passen diese Datenschutzerklärung an, sobald sich die Website oder die eingesetzten Dienste ändern. Es gilt die jeweils hier veröffentlichte Fassung.</p>
+</Legal>

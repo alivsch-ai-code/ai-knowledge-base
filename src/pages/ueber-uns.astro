@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+---
+<Base title="Über uns" description="Klarwerk macht KI-Automationen verständlich. Getestet statt behauptet. Ehrlich statt euphorisch.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Über Klarwerk</p>
+      <h1 class="headline reveal">KI ist kein Hexenwerk. Sondern Handwerk.</h1>
+      <p class="lead reveal">Jeder kann von KI profitieren, wenn es jemand verständlich erklärt. Genau das tun wir.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 24px">
+    <div class="container-wide split">
+      <div class="reveal">
+        <h2 class="headline-md">Warum es Klarwerk gibt.</h2>
+        <p class="lead">Die meisten KI‑Inhalte sind entweder Hype oder Fachchinesisch. Dazwischen fehlte etwas: ruhige, getestete Guides für Menschen, die einfach ihre Arbeit besser machen wollen.</p>
+        <p class="lead">Jeden Guide richten wir vor der Veröffentlichung selbst ein und nutzen ihn im Alltag. Was nicht funktioniert, erscheint nicht.</p>
+      </div>
+      <div class="portrait reveal">Platz für ein Foto von dir</div>
+    </div>
+  </section>
+
+  <section class="section section-surface">
+    <div class="container-wide center">
+      <h2 class="headline-md reveal">Woran wir glauben.</h2>
+      <div class="values">
+        <article class="value reveal">
+          <h3>Getestet statt behauptet.</h3>
+          <p>Jede Anleitung wird Schritt für Schritt nachgebaut, bevor sie online geht. Mit Datum, damit du weißt, wie aktuell sie ist.</p>
+        </article>
+        <article class="value reveal">
+          <h3>Ehrlich statt euphorisch.</h3>
+          <p>Wir sagen auch, wo KI an Grenzen stößt, was sie kostet und wann eine einfache Lösung besser ist.</p>
+        </article>
+        <article class="value reveal">
+          <h3>Privat per Design.</h3>
+          <p>Datenschutz ist kein Nachsatz. Wir zeigen immer, welche Daten wohin fließen, und bieten lokale Alternativen.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <Newsletter surface={false} />
+</Base>

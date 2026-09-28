@@ -1,0 +1,80 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import { site, slugify } from '../../data/site';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides', ({ data }) => !data.draft);
+  return guides.map((guide) => ({ params: { id: guide.id }, props: { guide, all: guides } }));
+}
+
+interface Props {
+  guide: CollectionEntry<'guides'>;
+  all: CollectionEntry<'guides'>[];
+}
+const { guide, all } = Astro.props;
+const { Content, headings } = await render(guide);
+const d = guide.data;
+
+const toc = headings.filter((h) => h.depth === 2);
+const related = all
+  .filter((g) => g.id !== guide.id && g.data.category === d.category)
+  .concat(all.filter((g) => g.id !== guide.id && g.data.category !== d.category))
+  .slice(0, 3);
+
+const fmt = (date: Date) => date.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={d.title} description={d.description}>
+  <article>
+    <header class="container-wide article-grid article-head">
+      <div>
+        <p class="breadcrumb">
+          <a href="/guides/">Guides</a>{' › '}<a href={`/guides/?kategorie=${slugify(d.category)}`}>{d.category}</a>
+        </p>
+        <div class="badges">
+          <span class="badge">{d.level}</span>
+          {d.pro && <span class="badge badge-pro">Pro</span>}
+        </div>
+        <h1 class="headline-md">{d.title}</h1>
+        <p class="lead">{d.description}</p>
+        <div class="article-meta">
+          <span><b>{d.duration} Minuten</b>Einrichtung</span>
+          <span><b>{d.level}</b>Niveau</span>
+          <span><b>{d.tools.join(', ')}</b>Werkzeuge</span>
+          <span><b>{fmt(d.updated ?? d.published)}</b>{d.updated ? 'Aktualisiert' : 'Veröffentlicht'}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-wide article-grid article-layout">
+      <div class="prose">
+        <Content />
+
+        {d.pro && (
+          <aside class="pro-gate">
+            <h2>Weiter mit Pro.</h2>
+            <p>Die vollständige Anleitung mit allen Schritten, Video und importierbarer Vorlage ist Teil von Pro.</p>
+            <a class="btn btn-primary" href={site.proCheckoutUrl}>Pro entdecken</a>
+          </aside>
+        )}
+      </div>
+
+      {toc.length > 1 && (
+        <nav class="toc" aria-label="Inhalt">
+          <h2>Inhalt</h2>
+          <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+        </nav>
+      )}
+    </div>
+  </article>
+
+  <section class="section section-surface">
+    <div class="container-wide">
+      <h2 class="headline-md center" style="margin-bottom: 48px">Das könnte dich auch interessieren.</h2>
+      <div class="card-grid">
+        {related.map((g) => <GuideCard guide={g} />)}
+      </div>
+    </div>
+  </section>
+</Base>

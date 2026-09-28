@@ -1,0 +1,39 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+const l = site.legal;
+---
+<Legal title="Impressum" updated="September 2026">
+  <p class="notice"><strong>Vorlage:</strong> Platzhalter in eckigen Klammern in <code>src/data/site.ts</code> ersetzen und den Text vor Veröffentlichung rechtlich prüfen lassen.</p>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>
+    {l.company}<br>
+    {l.owner}<br>
+    {l.street}<br>
+    {l.city}<br>
+    {l.country}
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>
+    Telefon: {l.phone}<br>
+    E‑Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+  </p>
+
+  <h2>Umsatzsteuer‑ID</h2>
+  <p>{l.vatId}</p>
+
+  <h2>Registereintrag</h2>
+  <p>{l.register}</p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>{l.responsible}</p>
+
+  <h2>Verbraucherstreitbeilegung</h2>
+  <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+  <h2>Haftung für Inhalte und Links</h2>
+  <p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Gewähr übernehmen. KI‑Werkzeuge verändern sich schnell; Anleitungen spiegeln den Stand ihres Veröffentlichungs‑ bzw. Aktualisierungsdatums wider.</p>
+  <p>Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p>
+</Legal>

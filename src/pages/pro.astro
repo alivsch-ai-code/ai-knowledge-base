@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { faq } from '../data/learning';
+import { site } from '../data/site';
+---
+<Base title="Pro" description="Video-Kurse, Profi-Guides und fertige Vorlagen. Für alle, die KI nicht nur ausprobieren, sondern einsetzen wollen. Monatlich kündbar.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Klarwerk Pro</p>
+      <h1 class="headline reveal">Mehr Tiefe. Mehr Tempo.</h1>
+      <p class="lead reveal">Video‑Kurse, Profi‑Guides und fertige Vorlagen. Für alle, die KI nicht nur ausprobieren, sondern einsetzen wollen.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="container-wide center">
+      <div class="plans" style="margin-top: 0">
+        <article class="plan reveal" style="text-align:left">
+          <h3>Kostenlos</h3>
+          <div class="price">0 €</div>
+          <span class="muted">Für immer.</span>
+          <ul>
+            <li>Alle frei verfügbaren Guides</li>
+            <li>Newsletter „Klartext“, jeden Sonntag</li>
+            <li>Ausgewählte Prompts</li>
+          </ul>
+          <a class="btn btn-dark" href="/guides/prompt-grundlagen/">Ersten Guide starten</a>
+        </article>
+        <article class="plan plan-pro reveal" style="text-align:left">
+          <h3>Pro</h3>
+          <div class="price">{site.proPrice} <small>/ Monat</small></div>
+          <span style="color:#a1a1a6">Monatlich kündbar.</span>
+          <ul>
+            <li>Alles aus Kostenlos</li>
+            <li>Alle Video‑Kurse</li>
+            <li>Profi‑Guides in voller Länge</li>
+            <li>Vorlagen zum Importieren</li>
+            <li>Komplette Prompt‑Bibliothek</li>
+            <li>Community und monatliche Live‑Sessions</li>
+          </ul>
+          <a class="btn btn-primary" href={site.proCheckoutUrl}>Pro werden</a>
+        </article>
+      </div>
+      <p class="muted" style="font-size:14px; margin-top: 24px">Alle Preise inkl. gesetzlicher MwSt. Für Teams ab fünf Personen: <a href="/kontakt/">Angebot anfragen</a>.</p>
+    </div>
+  </section>
+
+  <section class="section section-surface" id="faq">
+    <div class="container">
+      <h2 class="headline-md center reveal">Häufige Fragen.</h2>
+      <div class="faq">
+        {faq.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

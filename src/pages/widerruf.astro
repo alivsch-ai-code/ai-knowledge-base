@@ -1,0 +1,27 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+const l = site.legal;
+---
+<Legal title="Widerrufsbelehrung" updated="[Datum]">
+  <p class="notice"><strong>Gliederung, kein fertiger Rechtstext.</strong> Verbraucher haben bei Online‑Abonnements grundsätzlich ein 14‑tägiges Widerrufsrecht. Für digitale Inhalte und Dienstleistungen gelten Sonderregeln zum vorzeitigen Erlöschen. Verwende die gesetzliche Muster‑Widerrufsbelehrung (Anlage 1 zu Art. 246a § 1 Abs. 2 EGBGB) und lass die Umsetzung im Bestellprozess prüfen.</p>
+
+  <h2>Widerrufsrecht</h2>
+  <p>[Text der gesetzlichen Muster‑Widerrufsbelehrung]</p>
+
+  <h2>Folgen des Widerrufs</h2>
+  <p>[Text der gesetzlichen Muster‑Widerrufsbelehrung]</p>
+
+  <h2>Vorzeitiges Erlöschen</h2>
+  <p>[Hinweise zum vorzeitigen Erlöschen bei digitalen Inhalten bzw. Dienstleistungen]</p>
+
+  <h2>Muster‑Widerrufsformular</h2>
+  <p>
+    An: {l.company}, {l.street}, {l.city}, {site.email}<br><br>
+    Hiermit widerrufe(n) ich/wir den von mir/uns abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung: …<br>
+    Bestellt am: …<br>
+    Name des/der Verbraucher(s): …<br>
+    Anschrift des/der Verbraucher(s): …<br>
+    Datum: …
+  </p>
+</Legal>

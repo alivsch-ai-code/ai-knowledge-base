@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { categories } from '../../content.config';
+import { slugify } from '../../data/site';
+
+const guides = (await getCollection('guides', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+---
+<Base title="Guides" description="Getestete Schritt-für-Schritt-Guides für KI-Automationen: E-Mails, Rechnungen, Meetings, lokale KI und mehr.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Guides</p>
+      <h1 class="headline reveal">Klick für Klick. Zum Ergebnis.</h1>
+      <p class="lead reveal">Jeder Guide ist getestet und endet mit einer Automation, die läuft. Mit Zeitangabe und Schwierigkeitsgrad, damit du vorher weißt, worauf du dich einlässt.</p>
+    </div>
+  </section>
+
+  <section class="section section-surface" style="padding-top: 56px">
+    <div class="container-wide">
+      <input class="search" type="search" placeholder="Guides durchsuchen" aria-label="Guides durchsuchen" data-guide-search>
+      <div class="filters" role="group" aria-label="Nach Thema filtern">
+        <button class="filter" type="button" data-filter="alle" aria-pressed="true">Alle</button>
+        {categories.map((c) => (
+          <button class="filter" type="button" data-filter={slugify(c)} aria-pressed="false">{c}</button>
+        ))}
+      </div>
+      <p class="result-count" data-guide-count>{guides.length} Guides</p>
+
+      <div class="card-grid" data-guide-list>
+        {guides.map((guide) => <GuideCard guide={guide} />)}
+      </div>
+      <p class="empty" data-guide-empty hidden>Keine passenden Guides gefunden. Versuch es mit einem anderen Suchbegriff.</p>
+    </div>
+  </section>
+
+  <Newsletter surface={false} />
+</Base>

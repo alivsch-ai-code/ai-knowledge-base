@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { promptGroups } from '../data/prompts';
+---
+<Base title="Prompt-Bibliothek" description="Geprüfte Prompts für E-Mail, Recherche, Marketing und Organisation. Kopieren, anpassen, fertig.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Prompt‑Bibliothek</p>
+      <h1 class="headline reveal">Die richtigen Worte. Sofort.</h1>
+      <p class="lead reveal">Geprüfte Prompts, sortiert nach Aufgabe. Ersetze die Stellen in eckigen Klammern. Fertig.</p>
+    </div>
+  </section>
+
+  <section class="section section-surface" style="padding-top: 56px">
+    <div class="container">
+      {promptGroups.map((group) => (
+        <div class="prompt-group reveal">
+          <h2>{group.title}</h2>
+          {group.prompts.map((p) => (
+            <article class="prompt-card">
+              <h3>{p.title} {p.pro && <span class="badge badge-pro">Pro</span>}</h3>
+              {p.pro ? (
+                <p class="tip">Dieser Prompt ist Teil der <a href="/pro/">Pro‑Bibliothek</a>.</p>
+              ) : (
+                <div class="prompt"><code>{p.text}</code><button type="button">Kopieren</button></div>
+              )}
+              {p.tip && <p class="tip">{p.tip}</p>}
+            </article>
+          ))}
+        </div>
+      ))}
+      <p class="center muted" style="margin-top: 56px">Wie gute Prompts funktionieren, zeigt der Guide <a href="/guides/prompt-grundlagen/">Prompt‑Grundlagen ›</a></p>
+    </div>
+  </section>
+</Base>

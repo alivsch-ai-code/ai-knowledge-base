@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+<Base title="Kontakt" description="Fragen, Feedback oder Anfragen für Teams und Workshops: Schreib uns.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow aurora-text reveal">Kontakt</p>
+      <h1 class="headline reveal">Sprich mit uns.</h1>
+      <p class="lead reveal">Fragen zu einem Guide, Feedback oder ein Workshop für dein Team? Wir antworten in der Regel innerhalb von zwei Werktagen.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="container">
+      <p class="notice" data-form-error hidden style="max-width: 640px; margin: 0 auto 24px">Die Nachricht konnte nicht gesendet werden. Bitte prüfe deine Angaben oder schreib uns direkt an <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <form class="form reveal" method="post" action="/api/kontakt.php">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="email">E‑Mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required maxlength="200">
+          </div>
+        </div>
+        <div class="field">
+          <label for="topic">Worum geht es?</label>
+          <select id="topic" name="topic">
+            <option>Frage zu einem Guide</option>
+            <option>Pro‑Mitgliedschaft</option>
+            <option>Team‑Lizenz oder Workshop</option>
+            <option>Feedback</option>
+            <option>Sonstiges</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Nachricht</label>
+          <textarea id="message" name="message" required maxlength="5000"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <label class="check-field">
+          <input type="checkbox" name="consent" required>
+          <span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden. Details in der <a href="/datenschutz/">Datenschutzerklärung</a>.</span>
+        </label>
+        <button class="btn btn-primary" type="submit">Nachricht senden</button>
+      </form>
+      <p class="center muted" style="margin-top: 40px; font-size: 15px">Lieber direkt? <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+</Base>
